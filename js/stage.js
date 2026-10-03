@@ -6,13 +6,10 @@
    any screen size and the export (Phase 6) can reuse the same rect.
    ============================================================= */
 
-import { subscribe } from "./state.js";
+import { getState, subscribe } from "./state.js";
+import { ALL, getData, platforms, platformById, fitFor, loadZones } from "./zones.js";
 import { FRAME, fitRect, toPercent } from "./util/geometry.js";
 import { describeAspect, fitNote } from "./util/aspect.js";
-
-// TODO(phase 3): read each platform's nonVerticalFit from platforms.json.
-// Until then every platform is assumed to letterbox ("contain").
-const FIT_MODE = "contain";
 
 let stage;
 let layer;
@@ -29,11 +26,23 @@ export function initStage() {
   aspectChip = document.querySelector("[data-aspect-chip]");
 
   subscribe((state, changed) => {
-    if (changed.includes("media")) render(state.media);
+    if (changed.includes("media")) mount(state.media);
+    if (changed.includes("media") || changed.includes("platform")) place(state);
   });
+  // Fit modes come from the data; re-place once it has arrived.
+  loadZones().then(() => place(getState()), () => {});
 }
 
-function render(media) {
+/** The fit for the current view. "All" uses the shared mode, or
+    "contain" if the platforms disagree (the chip lists each one). */
+function currentFit(platformId) {
+  if (!getData()) return "contain";
+  if (platformId !== ALL) return fitFor(platformId);
+  const modes = new Set(platforms().map((p) => fitFor(p.id)));
+  return modes.size === 1 ? [...modes][0] : "contain";
+}
+
+function mount(media) {
   if (!media) {
     layer.replaceChildren();
     delete stage.dataset.hasMedia;
@@ -43,24 +52,42 @@ function render(media) {
     return;
   }
 
-  const fit = fitRect(media.width, media.height, FIT_MODE);
-  layer.style.left = toPercent(fit.x, FRAME.width);
-  layer.style.top = toPercent(fit.y, FRAME.height);
-  layer.style.width = toPercent(fit.w, FRAME.width);
-  layer.style.height = toPercent(fit.h, FRAME.height);
   layer.replaceChildren(media.el);
   stage.dataset.hasMedia = media.kind;
-
-  const aspect = describeAspect(media.width, media.height);
   fileName.textContent = media.name;
 
+  const aspect = describeAspect(media.width, media.height);
   const meta = [`${media.width}×${media.height}`, aspect.label];
   if (media.kind === "video") meta.push(formatDuration(media.duration));
   metaChip.textContent = meta.join(" · ");
   metaChip.hidden = false;
+}
 
+function place({ media, platform }) {
+  if (!media) return;
+  const fit = fitRect(media.width, media.height, currentFit(platform));
+  layer.style.left = toPercent(fit.x, FRAME.width);
+  layer.style.top = toPercent(fit.y, FRAME.height);
+  layer.style.width = toPercent(fit.w, FRAME.width);
+  layer.style.height = toPercent(fit.h, FRAME.height);
+
+  const aspect = describeAspect(media.width, media.height);
   aspectChip.hidden = aspect.isVertical;
-  aspectChip.textContent = aspect.isVertical ? "" : `${aspect.label} detected · ${fitNote(aspect, FIT_MODE)}`;
+  aspectChip.textContent = aspect.isVertical ? "" : `${aspect.label} detected · ${fitSummary(aspect, platform)}`;
+}
+
+/** "will be letterboxed", or per platform when they differ:
+    "TikTok, Reels letterboxed · Shorts cropped". */
+function fitSummary(aspect, platformId) {
+  if (!getData()) return fitNote(aspect, "contain");
+  const ids = platformId === ALL ? platforms().map((p) => p.id) : [platformId];
+  const groups = new Map();
+  for (const id of ids) {
+    const note = fitNote(aspect, fitFor(id));
+    groups.set(note, [...(groups.get(note) ?? []), platformById(id)?.name ?? id]);
+  }
+  if (groups.size === 1) return [...groups.keys()][0];
+  return [...groups].map(([note, names]) => `${names.join(", ")} ${note.replace("will be ", "")}`).join(" · ");
 }
 
 function formatDuration(seconds) {

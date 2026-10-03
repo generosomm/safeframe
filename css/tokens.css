@@ -35,8 +35,11 @@
   --danger: #ff5b4a;           /* 6.5:1 on --ink-900, both directions */
   --danger-wash: rgba(255, 91, 74, 0.18);
 
-  /* ---- Stage overlay (overlay.js + export.js) ----------------- */
-  --zone-fill: rgba(255, 255, 255, 0.10);
+  /* ---- Stage overlay (overlay.js + export.js) -----------------
+     Zones are a dark scrim plus a light hatch, so they read on bright
+     and dark footage alike. */
+  --zone-fill: rgba(10, 10, 10, 0.42);
+  --zone-hatch: rgba(255, 255, 255, 0.16);
   --zone-stroke: rgba(255, 255, 255, 0.35);
   --mock-ui: rgba(255, 255, 255, 0.55);
   --safe-stroke: var(--accent);
@@ -118,6 +121,7 @@
   --dur-1: 180ms;
   --dur-2: 420ms;
   --dur-3: 900ms;
+  --dur-morph: 640ms;          /* zone morph between platforms (overlay.js) */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-io: cubic-bezier(0.76, 0, 0.24, 1);
 
@@ -135,5 +139,6 @@
     --dur-1: 1ms;
     --dur-2: 1ms;
     --dur-3: 1ms;
+    --dur-morph: 0ms;
   }
 }

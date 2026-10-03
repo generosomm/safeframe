@@ -32,6 +32,16 @@
   gap: var(--s-3);
 }
 
+.eyebrow {
+  flex-wrap: wrap;
+  row-gap: var(--s-1);
+}
+
+/* Each half stays whole: if it has to wrap, it wraps at the dot. */
+.eyebrow span {
+  white-space: nowrap;
+}
+
 .hero-lead {
   max-width: 34ch;
 }
@@ -94,6 +104,33 @@ html.is-dragging .dropzone-target {
 
 .dropzone-hint kbd {
   font: inherit;
+}
+
+.dropzone-compact {
+  display: none;
+  color: var(--text-mid);
+  font-size: var(--fs-small);
+}
+
+.dropzone-compact kbd {
+  font: inherit;
+}
+
+/* Phones, tablets and narrow windows: "Check your video" already
+   opens the picker (camera roll on phones), so the big target would
+   only repeat it and push the phone down. Desktop keeps it. The input
+   goes too, so Tab never lands on something invisible. */
+@media (max-width: 767px), (pointer: coarse) {
+  .dropzone-target,
+  .dropzone-input {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) and (pointer: fine) {
+  .dropzone-compact {
+    display: block;
+  }
 }
 
 .privacy-note {
@@ -295,6 +332,14 @@ html.is-dragging .dropzone-target {
 }
 
 /* ---- Breakpoints --------------------------------------------- */
+
+/* On a phone the short version fits one line: the h1 and lead
+   already say what this is. */
+@media (max-width: 479px) {
+  .eyebrow-lead {
+    display: none;
+  }
+}
 
 @media (min-width: 768px) {
   .steps {

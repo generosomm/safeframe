@@ -1,0 +1,121 @@
+{
+  "version": 1,
+  "space": { "width": 1080, "height": 1920 },
+  "notes": [
+    "All rects are { x, y, w, h } in the 1080x1920 frame.",
+    "Each preset's zones are the source's margins turned into full-length bands: top bar across the top margin, caption block across the bottom margin, action stack down the right margin between them, edge margin down the left. 'safe' is what is left.",
+    "TODO: nonVerticalFit is 'contain' (letterbox) for every platform until verified against the real apps; no source was given for crop behaviour.",
+    "TODO: captionLines.collapsed is null until a source or calibration gives real numbers (v2 caption preview).",
+    "verified stays false until calibrated against screenshots from a real device."
+  ],
+  "presets": [
+    {
+      "id": "standard",
+      "label": "Standard",
+      "note": "Organic posts.",
+      "source": {
+        "name": "AdaptlyPost, Social Media Safe Zones 2026",
+        "url": "https://adaptlypost.com/blog/social-media-safe-zones-2026-complete-guide"
+      }
+    },
+    {
+      "id": "strict",
+      "label": "Strict",
+      "note": "Leaves room for ads, Shop links and larger UI on some phones.",
+      "source": {
+        "name": "upload-post, Safe Zone Checker",
+        "url": "https://www.upload-post.com/tools/safe-zone-checker/"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "id": "tiktok",
+      "name": "TikTok",
+      "verified": false,
+      "lastChecked": "2026-10-04",
+      "nonVerticalFit": "contain",
+      "captionLines": { "collapsed": null, "estimate": true },
+      "presets": {
+        "standard": {
+          "margins": { "top": 108, "bottom": 320, "left": 60, "right": 120 },
+          "safe": { "x": 60, "y": 108, "w": 900, "h": 1492 },
+          "zones": [
+            { "id": "topbar", "type": "topbar", "label": "Top bar", "rect": { "x": 0, "y": 0, "w": 1080, "h": 108 } },
+            { "id": "actions", "type": "actions", "label": "Action buttons", "rect": { "x": 960, "y": 108, "w": 120, "h": 1492 } },
+            { "id": "caption", "type": "caption", "label": "Caption + username + audio", "rect": { "x": 0, "y": 1600, "w": 1080, "h": 320 } },
+            { "id": "edge-left", "type": "edge", "label": "Edge margin", "rect": { "x": 0, "y": 108, "w": 60, "h": 1492 } }
+          ]
+        },
+        "strict": {
+          "margins": { "top": 240, "bottom": 660, "left": 120, "right": 120 },
+          "safe": { "x": 120, "y": 240, "w": 840, "h": 1020 },
+          "zones": [
+            { "id": "topbar", "type": "topbar", "label": "Top bar", "rect": { "x": 0, "y": 0, "w": 1080, "h": 240 } },
+            { "id": "actions", "type": "actions", "label": "Action buttons", "rect": { "x": 960, "y": 240, "w": 120, "h": 1020 } },
+            { "id": "caption", "type": "caption", "label": "Caption + username + audio", "rect": { "x": 0, "y": 1260, "w": 1080, "h": 660 } },
+            { "id": "edge-left", "type": "edge", "label": "Edge margin", "rect": { "x": 0, "y": 240, "w": 120, "h": 1020 } }
+          ]
+        }
+      }
+    },
+    {
+      "id": "reels",
+      "name": "Reels",
+      "verified": false,
+      "lastChecked": "2026-10-04",
+      "nonVerticalFit": "contain",
+      "captionLines": { "collapsed": null, "estimate": true },
+      "presets": {
+        "standard": {
+          "margins": { "top": 210, "bottom": 310, "left": 0, "right": 84 },
+          "safe": { "x": 0, "y": 210, "w": 996, "h": 1400 },
+          "zones": [
+            { "id": "topbar", "type": "topbar", "label": "Top bar", "rect": { "x": 0, "y": 0, "w": 1080, "h": 210 } },
+            { "id": "actions", "type": "actions", "label": "Action buttons", "rect": { "x": 996, "y": 210, "w": 84, "h": 1400 } },
+            { "id": "caption", "type": "caption", "label": "Caption + username + audio", "rect": { "x": 0, "y": 1610, "w": 1080, "h": 310 } }
+          ]
+        },
+        "strict": {
+          "margins": { "top": 269, "bottom": 672, "left": 65, "right": 65 },
+          "safe": { "x": 65, "y": 269, "w": 950, "h": 979 },
+          "zones": [
+            { "id": "topbar", "type": "topbar", "label": "Top bar", "rect": { "x": 0, "y": 0, "w": 1080, "h": 269 } },
+            { "id": "actions", "type": "actions", "label": "Action buttons", "rect": { "x": 1015, "y": 269, "w": 65, "h": 979 } },
+            { "id": "caption", "type": "caption", "label": "Caption + username + audio", "rect": { "x": 0, "y": 1248, "w": 1080, "h": 672 } },
+            { "id": "edge-left", "type": "edge", "label": "Edge margin", "rect": { "x": 0, "y": 269, "w": 65, "h": 979 } }
+          ]
+        }
+      }
+    },
+    {
+      "id": "shorts",
+      "name": "Shorts",
+      "verified": false,
+      "lastChecked": "2026-10-04",
+      "nonVerticalFit": "contain",
+      "captionLines": { "collapsed": null, "estimate": true },
+      "presets": {
+        "standard": {
+          "margins": { "top": 120, "bottom": 300, "left": 0, "right": 96 },
+          "safe": { "x": 0, "y": 120, "w": 984, "h": 1500 },
+          "zones": [
+            { "id": "topbar", "type": "topbar", "label": "Top bar", "rect": { "x": 0, "y": 0, "w": 1080, "h": 120 } },
+            { "id": "actions", "type": "actions", "label": "Action buttons", "rect": { "x": 984, "y": 120, "w": 96, "h": 1500 } },
+            { "id": "caption", "type": "caption", "label": "Caption + username + audio", "rect": { "x": 0, "y": 1620, "w": 1080, "h": 300 } }
+          ]
+        },
+        "strict": {
+          "margins": { "top": 288, "bottom": 672, "left": 48, "right": 192 },
+          "safe": { "x": 48, "y": 288, "w": 840, "h": 960 },
+          "zones": [
+            { "id": "topbar", "type": "topbar", "label": "Top bar", "rect": { "x": 0, "y": 0, "w": 1080, "h": 288 } },
+            { "id": "actions", "type": "actions", "label": "Action buttons", "rect": { "x": 888, "y": 288, "w": 192, "h": 960 } },
+            { "id": "caption", "type": "caption", "label": "Caption + username + audio", "rect": { "x": 0, "y": 1248, "w": 1080, "h": 672 } },
+            { "id": "edge-left", "type": "edge", "label": "Edge margin", "rect": { "x": 0, "y": 288, "w": 48, "h": 960 } }
+          ]
+        }
+      }
+    }
+  ]
+}

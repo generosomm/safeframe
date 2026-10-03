@@ -23,3 +23,17 @@ export function clearNotice() {
   delete el.dataset.visible;
   el.textContent = "";
 }
+
+/* Screen-reader-only announcements for things that change without a
+   focus move (keyboard shortcuts). Cleared first so repeating the
+   same message is announced again. */
+let announcer;
+
+export function announce(message) {
+  announcer ??= document.getElementById("announcer");
+  if (!announcer) return;
+  announcer.textContent = "";
+  requestAnimationFrame(() => {
+    announcer.textContent = message;
+  });
+}

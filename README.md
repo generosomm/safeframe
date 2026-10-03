@@ -31,9 +31,22 @@ index.html          landing + tool in one page
 css/                tokens, fonts, base, chrome, landing, tool, sheet
 js/                 vanilla ES modules, one job per file
 js/scene/           3D layer (Phase 7), removable without breaking the tool
-data/platforms.json safe zone data (Phase 3)
+data/platforms.json safe zone data: every rect, preset and source
 assets/             fonts, images
 ```
+
+## URL options
+
+| Param | Values | Example |
+|---|---|---|
+| `p` | `tiktok`, `reels`, `shorts`, `all` | `?p=reels` |
+| `preset` | `standard`, `strict` | `?p=all&preset=strict` |
+
+The URL updates as you switch, so a link opens with the same platform and preset. In the tool, keys **1–4** switch platform.
+
+## Safe zone data
+
+All platform numbers live in `data/platforms.json`, never in the JS. Each platform has two presets: **Standard** (AdaptlyPost's 2026 guide, organic posts) and **Strict** (upload-post's checker, room for ads and Shop links). The sources' margins are turned into labelled bands (top bar, action buttons, caption block, edge margin). Every platform is marked `"verified": false` until calibrated against real screenshots.
 
 ## Credits
 

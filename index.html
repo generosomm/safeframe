@@ -26,6 +26,28 @@
   <link rel="stylesheet" href="css/sheet.css">
 
   <script type="module" src="js/main.js"></script>
+
+  <!-- Vercel Web Analytics: anonymous page views, no cookies, nothing
+       about your files. Skipped on localhost and LAN addresses so local
+       testing stays quiet. beforeSend drops the query string (?p=…) and
+       sends one view per page load, not one per platform switch. -->
+  <script>
+    (() => {
+      if (/^(localhost|127\.|10\.|192\.168\.|\[::1\])/.test(location.hostname)) return;
+      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+      let last = "";
+      window.va("beforeSend", (event) => {
+        const url = event.url.split("?")[0];
+        if (url === last) return null;
+        last = url;
+        return { ...event, url };
+      });
+      const script = document.createElement("script");
+      script.defer = true;
+      script.src = "/_vercel/insights/script.js";
+      document.head.append(script);
+    })();
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -50,7 +72,7 @@
     <div class="landing" id="landing">
       <section class="hero page" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="label marker">Safe zone checker · TikTok / Reels / Shorts</p>
+          <p class="label marker eyebrow"><span class="eyebrow-lead">Safe zone checker ·</span> <span>TikTok / Reels / Shorts</span></p>
           <h1 class="hero-title" id="hero-title">The UI is sitting on your caption.</h1>
           <p class="lead hero-lead">See exactly what TikTok, Reels and Shorts cover before you post. Mark what matters, catch collisions, export a guide for your editor.</p>
           <div class="hero-actions">
@@ -72,6 +94,9 @@
               <span class="only-coarse">Tap to choose from your camera roll</span>
             </span>
           </label>
+          <!-- Narrow windows with a mouse: the big target is gone, but the
+               whole page still takes drops and pastes. -->
+          <p class="dropzone-compact">Drag a file anywhere on this page, or paste with <kbd data-paste-key>Ctrl+V</kbd>.</p>
           <p class="label privacy-note"><span class="dot" aria-hidden="true"></span>Your file never leaves your device</p>
         </div>
 
@@ -134,6 +159,30 @@
           <p class="stage-empty label">1080 × 1920 · 9:16</p>
           <!-- Positioned by stage.js from a fit rect in 1080×1920 units. -->
           <div class="stage-media" data-stage-media></div>
+
+          <!-- Drawn by overlay.js in frame units. Decorative for assistive
+               tech: the collision list (Phase 4) carries the same facts. -->
+          <svg class="overlay" viewBox="0 0 1080 1920" preserveAspectRatio="none" aria-hidden="true" focusable="false" data-overlay>
+            <defs>
+              <mask id="sf-zone-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="1080" height="1920" data-zone-mask></mask>
+              <pattern id="sf-zone-hatch" patternUnits="userSpaceOnUse" width="22" height="22" patternTransform="rotate(45)">
+                <rect class="zone-hatch-line" width="3" height="22"/>
+              </pattern>
+            </defs>
+            <g data-layer="zones" mask="url(#sf-zone-mask)">
+              <rect class="zone-fill" width="1080" height="1920"/>
+              <rect width="1080" height="1920" fill="url(#sf-zone-hatch)"/>
+            </g>
+            <g class="mock" data-layer="mock" data-mock></g>
+            <g data-layer="zones">
+              <g data-zone-edges></g>
+              <g data-zone-labels></g>
+            </g>
+            <g data-layer="safe">
+              <rect class="safe-outline" data-safe/>
+              <text class="safe-label" data-safe-label>UNIVERSAL SAFE AREA</text>
+            </g>
+          </svg>
         </div>
       </div>
 
@@ -146,23 +195,16 @@
 
         <div class="sheet-body" id="sheet-body">
           <div class="rail rail-left">
+            <!-- Options are built from data/platforms.json by controls.js. -->
             <fieldset class="panel" data-sheet-peek>
-              <legend class="label marker panel-legend">01 · Platform</legend>
-              <div class="segmented">
-                <label class="seg"><input type="radio" name="platform" value="tiktok" checked><span>TikTok</span></label>
-                <label class="seg"><input type="radio" name="platform" value="reels"><span>Reels</span></label>
-                <label class="seg"><input type="radio" name="platform" value="shorts"><span>Shorts</span></label>
-                <label class="seg"><input type="radio" name="platform" value="all"><span>All</span></label>
-              </div>
+              <legend class="label marker panel-legend">01 · Platform <span class="legend-keys only-fine" aria-hidden="true"><kbd>1</kbd>–<kbd>4</kbd></span></legend>
+              <div class="segmented" data-platform-options></div>
             </fieldset>
 
             <fieldset class="panel">
               <legend class="label panel-legend">Zone preset</legend>
-              <div class="segmented">
-                <label class="seg"><input type="radio" name="preset" value="standard" checked><span>Standard</span></label>
-                <label class="seg"><input type="radio" name="preset" value="strict"><span>Strict</span></label>
-              </div>
-              <p class="panel-hint">Standard fits organic posts. Strict leaves room for ads, Shop links and larger UI on some phones.</p>
+              <div class="segmented" data-preset-options></div>
+              <p class="panel-hint" data-preset-hint></p>
             </fieldset>
 
             <fieldset class="panel">
@@ -221,7 +263,7 @@
               </ul>
             </section>
 
-            <p class="zones-note">Zones are estimates. Apps change their UI often.</p>
+            <p class="zones-note">Zones are estimates<span data-unverified>, not yet verified on a device</span>. Apps change their UI often. Last checked <time datetime="2026-10-04" data-last-checked>Oct 4, 2026</time>.</p>
           </div>
         </div>
       </div>
@@ -235,8 +277,9 @@
       <li><a href="https://github.com/generosomm">GitHub</a></li>
       <li><a href="https://www.tiktok.com/@eroedtx">TikTok @eroedtx</a></li>
     </ul>
-    <!-- Phase 3 overwrites the date from data/platforms.json. -->
+    <!-- controls.js overwrites the date from data/platforms.json. -->
     <p class="footer-note">Zones are estimates, last checked <time datetime="2026-10-04" data-last-checked>Oct 4, 2026</time>.</p>
+    <p class="footer-note">This site counts anonymous page views only (Vercel Web Analytics, no cookies). Your files never leave your device.</p>
   </footer>
 
   <!-- The one picker every "open a file" button uses. Visually hidden,
@@ -254,5 +297,6 @@
   </div>
 
   <p class="notice" id="notice" role="status" aria-live="polite"></p>
+  <p class="sr-only" id="announcer" aria-live="polite"></p>
 </body>
 </html>

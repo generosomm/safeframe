@@ -150,6 +150,78 @@
 .stage-media {
   position: absolute;
   inset: 0;
+  /* Platforms can fit non-9:16 media differently; the picture eases
+     between fits instead of jumping. */
+  transition: left var(--dur-morph) var(--ease-out), top var(--dur-morph) var(--ease-out),
+    width var(--dur-morph) var(--ease-out), height var(--dur-morph) var(--ease-out);
+}
+
+/* ---- Overlay ----------------------------------------------------
+   SVG in frame units. --px (frame units per screen pixel, set by
+   overlay.js) keeps strokes and labels the same on-screen size at any
+   stage size. Never takes pointer input: boxes (Phase 4) sit above. */
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.overlay [data-layer] {
+  transition: opacity var(--dur-2) var(--ease-out);
+}
+
+.overlay [data-layer][data-off] {
+  opacity: 0;
+}
+
+.zone-fill {
+  fill: var(--zone-fill);
+}
+
+.zone-hatch-line {
+  fill: var(--zone-hatch);
+}
+
+.zone-edge {
+  fill: none;
+  stroke: var(--zone-stroke);
+  stroke-width: calc(var(--px, 1) * 1px);
+}
+
+.mock {
+  fill: var(--mock-ui);
+}
+
+.zone-label,
+.safe-label {
+  font-family: var(--font-mono);
+  font-size: calc(var(--px, 1) * 11px);
+  font-weight: 500;
+  letter-spacing: calc(var(--px, 1) * 1.2px);
+  /* A dark halo so labels read on any footage. */
+  paint-order: stroke;
+  stroke: rgba(10, 10, 10, 0.7);
+  stroke-width: calc(var(--px, 1) * 3px);
+  stroke-linejoin: round;
+}
+
+.zone-label {
+  fill: var(--text);
+}
+
+.safe-outline {
+  fill: none;
+  stroke: var(--safe-stroke);
+  stroke-width: calc(var(--px, 1) * 1.5px);
+  stroke-dasharray: calc(var(--px, 1) * 6px) calc(var(--px, 1) * 4px);
+}
+
+.safe-label {
+  fill: var(--accent);
 }
 
 .stage-media > img,
@@ -179,6 +251,27 @@
 .panel-legend {
   float: left;
   width: 100%;
+}
+
+.legend-keys {
+  margin-left: auto;
+  color: var(--text-dim);
+  letter-spacing: 0.04em;
+}
+
+.legend-keys kbd {
+  font: inherit;
+}
+
+.panel-hint a {
+  color: var(--text);
+  border-bottom: 1px solid var(--line-strong);
+  transition: border-color var(--dur-1) var(--ease-out), color var(--dur-1) var(--ease-out);
+}
+
+.panel-hint a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .panel-hint {
