@@ -20,7 +20,9 @@ python -m http.server 8000
 
 Open the printed URL. ES modules do not load from `file://`, so double-clicking `index.html` will not work.
 
-Add `?view=tool` to the URL to preview the tool layout without loading a file.
+Add `?view=tool` to the URL to preview the tool layout without loading a file, or press **Try a sample** on the landing to load a built-in frame.
+
+To test on your phone, serve on your network (`python -m http.server 8000 --bind 0.0.0.0`) and open `http://<your computer's IP>:8000` on the same Wi-Fi.
 
 ## Project structure
 

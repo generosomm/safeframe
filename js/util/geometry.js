@@ -24,5 +24,6 @@ export function fitRect(srcW, srcH, mode = "contain", frame = FRAME) {
 
 /** A frame-unit length as a percentage of a frame dimension, for CSS. */
 export function toPercent(value, total) {
-  return `${(value / total) * 100}%`;
+  // Rounded so float noise (5.9e-15%) never reaches the style attribute.
+  return `${Number(((value / total) * 100).toFixed(4))}%`;
 }
