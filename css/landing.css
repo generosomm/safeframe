@@ -22,7 +22,14 @@
 .hero-title {
   max-width: 11ch;
   font-size: var(--fs-headline);
+  letter-spacing: var(--track-headline);
   line-height: var(--leading-tight);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
 }
 
 .hero-lead {
@@ -54,7 +61,7 @@
 }
 
 .dropzone-target:hover,
-.dropzone.is-over .dropzone-target {
+html.is-dragging .dropzone-target {
   --mark-color: var(--accent);
   background-color: var(--accent-wash);
 }
@@ -75,7 +82,8 @@
   font-family: var(--font-display);
   font-size: var(--fs-h3);
   font-weight: 600;
-  letter-spacing: var(--track-display);
+  letter-spacing: var(--track-heading);
+  word-spacing: var(--word-display);
   line-height: var(--leading-snug);
 }
 
@@ -84,12 +92,8 @@
   font-size: var(--fs-small);
 }
 
-.dropzone-foot {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--s-2) var(--s-4);
+.dropzone-hint kbd {
+  font: inherit;
 }
 
 .privacy-note {

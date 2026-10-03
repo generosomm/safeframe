@@ -7,7 +7,11 @@
 import { initChrome } from "./chrome.js";
 import { initView } from "./view.js";
 import { initSheet } from "./sheet.js";
+import { initStage } from "./stage.js";
+import { initDropzone } from "./dropzone.js";
 
 initChrome();
 initView();
 initSheet();
+initStage();
+initDropzone();

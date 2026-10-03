@@ -60,8 +60,12 @@ export function initView() {
     setView(view, { push: false });
   });
 
+  // In the tool, the wordmark goes back to the landing without a page
+  // reload, so the loaded file survives and Forward returns to it.
   document.addEventListener("click", (event) => {
-    if (event.target.closest('[data-action="new-file"]')) leaveTool();
+    if (!event.target.closest('[data-action="home"]') || root.dataset.view !== "tool") return;
+    event.preventDefault();
+    leaveTool();
   });
 
   // Development aid: ?view=tool opens the tool layout without a file,

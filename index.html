@@ -53,7 +53,10 @@
           <p class="label marker">Safe zone checker · TikTok / Reels / Shorts</p>
           <h1 class="hero-title" id="hero-title">The UI is sitting on your caption.</h1>
           <p class="lead hero-lead">See exactly what TikTok, Reels and Shorts cover before you post. Mark what matters, catch collisions, export a guide for your editor.</p>
-          <a class="btn btn-primary" href="#drop" data-action="browse">Check your video</a>
+          <div class="hero-actions">
+            <button class="btn btn-primary" type="button" data-action="browse">Check your video</button>
+            <button class="btn btn-ghost" type="button" data-action="sample">Try a sample</button>
+          </div>
         </div>
 
         <div class="dropzone" id="drop">
@@ -65,14 +68,11 @@
             </svg>
             <span class="dropzone-title">Drop a frame or video</span>
             <span class="dropzone-hint">
-              <span class="only-fine">or click to browse · paste with Ctrl+V</span>
+              <span class="only-fine">or click to browse · paste with <kbd data-paste-key>Ctrl+V</kbd></span>
               <span class="only-coarse">Tap to choose from your camera roll</span>
             </span>
           </label>
-          <div class="dropzone-foot">
-            <p class="label privacy-note"><span class="dot" aria-hidden="true"></span>Your file never leaves your device</p>
-            <button class="btn-text" type="button" data-action="sample">Try a sample <span aria-hidden="true">→</span></button>
-          </div>
+          <p class="label privacy-note"><span class="dot" aria-hidden="true"></span>Your file never leaves your device</p>
         </div>
 
         <!-- Decorative. Phase 7 mounts the 3D canvas here; the CSS
@@ -119,9 +119,10 @@
     <!-- ===== Tool ============================================ -->
     <section class="tool" id="tool" aria-labelledby="tool-title" hidden>
       <div class="tool-head">
-        <button class="btn-text" type="button" data-action="new-file"><span aria-hidden="true">←</span> New file</button>
-        <h2 class="tool-title label" id="tool-title" tabindex="-1">No file loaded</h2>
-        <p class="chip" data-aspect-chip hidden></p>
+        <button class="btn-text" type="button" data-action="new-file"><span aria-hidden="true">+</span> New file</button>
+        <h2 class="tool-title label" id="tool-title" tabindex="-1"><span class="sr-only">Checking: </span><span data-file-name>No file loaded</span></h2>
+        <p class="chip chip-meta" data-media-chip hidden></p>
+        <p class="chip chip-warn" data-aspect-chip hidden></p>
         <p class="status" id="status" role="status" data-state="idle">
           <span class="status-dot" aria-hidden="true"></span>
           <span data-status-text>Draw a box over anything that must stay visible.</span>
@@ -131,6 +132,8 @@
       <div class="stage-wrap">
         <div class="stage crop-marks" id="stage">
           <p class="stage-empty label">1080 × 1920 · 9:16</p>
+          <!-- Positioned by stage.js from a fit rect in 1080×1920 units. -->
+          <div class="stage-media" data-stage-media></div>
         </div>
       </div>
 
@@ -235,5 +238,21 @@
     <!-- Phase 3 overwrites the date from data/platforms.json. -->
     <p class="footer-note">Zones are estimates, last checked <time datetime="2026-10-04" data-last-checked>Oct 4, 2026</time>.</p>
   </footer>
+
+  <!-- The one picker every "open a file" button uses. Visually hidden,
+       never display:none, so iOS Safari lets JS open it. -->
+  <input class="sr-only" type="file" id="file-picker" accept="image/*,video/*" tabindex="-1" aria-hidden="true">
+
+  <!-- Shown while files are dragged over the window; the whole page
+       is the drop target. Visual only: the drop zone and the buttons
+       are the accessible ways in. -->
+  <div class="drop-overlay" aria-hidden="true">
+    <div class="drop-overlay-frame crop-marks">
+      <p class="drop-overlay-title">Drop to open</p>
+      <p class="label">Your file never leaves your device</p>
+    </div>
+  </div>
+
+  <p class="notice" id="notice" role="status" aria-live="polite"></p>
 </body>
 </html>

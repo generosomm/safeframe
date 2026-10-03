@@ -67,7 +67,13 @@
   --fs-small: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
   --fs-label: clamp(0.75rem, 0.73rem + 0.1vw, 0.8125rem);
 
-  --track-display: -0.035em;
+  /* Tracking scales with size. Clash Display is tight by default, so
+     only the giant hero can take negative tracking; everything smaller
+     sits at about zero, and every Clash heading gets some of its narrow
+     word space back so "UI is" never reads as "Ulis". */
+  --track-headline: -0.02em;
+  --track-heading: -0.005em;
+  --word-display: 0.14em;
   --track-label: 0.16em;
   --leading-tight: 0.92;
   --leading-snug: 1.15;
@@ -119,6 +125,8 @@
   --z-tool: 10;
   --z-sheet: 70;
   --z-chrome: 90;
+  --z-drop: 95;
+  --z-notice: 96;
   --z-skip: 100;
 }
 
