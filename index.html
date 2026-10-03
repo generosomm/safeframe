@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" data-view="landing">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0A0A0A">
+  <meta name="color-scheme" content="dark">
+
+  <title>SafeFrame — See what TikTok, Reels and Shorts cover</title>
+  <meta name="description" content="Drop in a frame or video and see exactly what the TikTok, Reels and Shorts interface covers. Flag collisions and export overlay guides for Premiere Pro, CapCut and After Effects. Runs entirely in your browser.">
+  <!-- TODO(phase 8): canonical, Open Graph image, manifest. -->
+
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+  <!-- The headline and body faces are on the first screen: start
+       fetching them before the CSS asks for them. -->
+  <link rel="preload" href="assets/fonts/clash-display-600.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/satoshi-400.woff2" as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/chrome.css">
+  <link rel="stylesheet" href="css/landing.css">
+  <link rel="stylesheet" href="css/tool.css">
+  <link rel="stylesheet" href="css/sheet.css">
+
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ===== Fixed chrome ===================================== -->
+  <header class="chrome chrome-top">
+    <a class="brand" href="./" data-action="home">
+      <span class="brand-name">SafeFrame</span>
+    </a>
+
+    <p class="chrome-privacy label"><span class="dot" aria-hidden="true"></span>Local only</p>
+
+    <button class="chrome-tc" type="button" aria-pressed="false" data-timecode>
+      <span class="sr-only">Pause timecode</span>
+      <span class="chrome-tc-tag" aria-hidden="true">REC</span>
+      <span class="chrome-tc-value" aria-hidden="true">00:00:00:00</span>
+    </button>
+  </header>
+
+  <main id="main">
+    <!-- ===== Landing ========================================= -->
+    <div class="landing" id="landing">
+      <section class="hero page" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="label marker">Safe zone checker · TikTok / Reels / Shorts</p>
+          <h1 class="hero-title" id="hero-title">The UI is sitting on your caption.</h1>
+          <p class="lead hero-lead">See exactly what TikTok, Reels and Shorts cover before you post. Mark what matters, catch collisions, export a guide for your editor.</p>
+          <a class="btn btn-primary" href="#drop" data-action="browse">Check your video</a>
+        </div>
+
+        <div class="dropzone" id="drop">
+          <input class="sr-only dropzone-input" type="file" id="file-input" accept="image/*,video/*">
+          <label class="dropzone-target crop-marks" for="file-input">
+            <svg class="dropzone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <rect x="6.5" y="2.5" width="11" height="19" rx="1.5"/>
+              <path d="M12 7.5v7m0 0-3-3m3 3 3-3"/>
+            </svg>
+            <span class="dropzone-title">Drop a frame or video</span>
+            <span class="dropzone-hint">
+              <span class="only-fine">or click to browse · paste with Ctrl+V</span>
+              <span class="only-coarse">Tap to choose from your camera roll</span>
+            </span>
+          </label>
+          <div class="dropzone-foot">
+            <p class="label privacy-note"><span class="dot" aria-hidden="true"></span>Your file never leaves your device</p>
+            <button class="btn-text" type="button" data-action="sample">Try a sample <span aria-hidden="true">→</span></button>
+          </div>
+        </div>
+
+        <!-- Decorative. Phase 7 mounts the 3D canvas here; the CSS
+             phone is the stand-in until then. -->
+        <div class="hero-visual" aria-hidden="true">
+          <div class="scene-slot" data-scene-slot>
+            <div class="phone-poster">
+              <div class="phone-screen">
+                <span class="pz pz-top"></span>
+                <span class="pz pz-actions"></span>
+                <span class="pz pz-caption"></span>
+                <span class="pz-safe"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="how page" id="how" aria-labelledby="how-title">
+        <div class="how-head">
+          <p class="label marker">How it works</p>
+          <h2 class="how-title" id="how-title">Drop. Mark. Export.</h2>
+        </div>
+        <ol class="steps">
+          <li class="step">
+            <p class="label">Clip 01 · Drop</p>
+            <h3 class="step-title">Open your frame</h3>
+            <p>Drop a still or a video. It opens right here in your browser. Nothing is uploaded, ever.</p>
+          </li>
+          <li class="step">
+            <p class="label">Clip 02 · Mark</p>
+            <h3 class="step-title">Box what matters</h3>
+            <p>Draw boxes over the caption, a face, the product or the CTA. Anything under the app's buttons turns red.</p>
+          </li>
+          <li class="step">
+            <p class="label">Clip 03 · Export</p>
+            <h3 class="step-title">Take the guide with you</h3>
+            <p>Download a transparent 1080×1920 guide and lay it over your timeline in Premiere Pro, CapCut or After Effects.</p>
+          </li>
+        </ol>
+      </section>
+    </div>
+
+    <!-- ===== Tool ============================================ -->
+    <section class="tool" id="tool" aria-labelledby="tool-title" hidden>
+      <div class="tool-head">
+        <button class="btn-text" type="button" data-action="new-file"><span aria-hidden="true">←</span> New file</button>
+        <h2 class="tool-title label" id="tool-title" tabindex="-1">No file loaded</h2>
+        <p class="chip" data-aspect-chip hidden></p>
+        <p class="status" id="status" role="status" data-state="idle">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span data-status-text>Draw a box over anything that must stay visible.</span>
+        </p>
+      </div>
+
+      <div class="stage-wrap">
+        <div class="stage crop-marks" id="stage">
+          <p class="stage-empty label">1080 × 1920 · 9:16</p>
+        </div>
+      </div>
+
+      <div class="timeline-slot" id="timeline" hidden></div>
+
+      <div class="tool-sheet" id="tool-sheet" data-state="peek">
+        <button class="sheet-handle" type="button" aria-expanded="false" aria-controls="sheet-body">
+          <span class="sr-only" data-sheet-label>Show more controls</span>
+        </button>
+
+        <div class="sheet-body" id="sheet-body">
+          <div class="rail rail-left">
+            <fieldset class="panel" data-sheet-peek>
+              <legend class="label marker panel-legend">01 · Platform</legend>
+              <div class="segmented">
+                <label class="seg"><input type="radio" name="platform" value="tiktok" checked><span>TikTok</span></label>
+                <label class="seg"><input type="radio" name="platform" value="reels"><span>Reels</span></label>
+                <label class="seg"><input type="radio" name="platform" value="shorts"><span>Shorts</span></label>
+                <label class="seg"><input type="radio" name="platform" value="all"><span>All</span></label>
+              </div>
+            </fieldset>
+
+            <fieldset class="panel">
+              <legend class="label panel-legend">Zone preset</legend>
+              <div class="segmented">
+                <label class="seg"><input type="radio" name="preset" value="standard" checked><span>Standard</span></label>
+                <label class="seg"><input type="radio" name="preset" value="strict"><span>Strict</span></label>
+              </div>
+              <p class="panel-hint">Standard fits organic posts. Strict leaves room for ads, Shop links and larger UI on some phones.</p>
+            </fieldset>
+
+            <fieldset class="panel">
+              <legend class="label marker panel-legend">02 · Layers</legend>
+              <div class="switch-list">
+                <label class="switch">
+                  <input type="checkbox" role="switch" name="layer" value="mock" checked>
+                  <span class="switch-track" aria-hidden="true"></span>
+                  <span class="switch-label">Mock UI</span>
+                </label>
+                <label class="switch">
+                  <input type="checkbox" role="switch" name="layer" value="zones" checked>
+                  <span class="switch-track" aria-hidden="true"></span>
+                  <span class="switch-label">Shaded zones</span>
+                </label>
+                <label class="switch">
+                  <input type="checkbox" role="switch" name="layer" value="safe">
+                  <span class="switch-track" aria-hidden="true"></span>
+                  <span class="switch-label">Universal safe area</span>
+                </label>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="rail rail-right">
+            <section class="panel" aria-labelledby="check-title">
+              <h3 class="label marker" id="check-title">03 · Check</h3>
+              <p class="panel-hint">Drag on the frame to box your caption, a face, the product or a CTA. Keyboard: press <kbd>N</kbd> to add a box.</p>
+              <ul class="collision-list" id="collision-list"></ul>
+            </section>
+
+            <section class="panel" aria-labelledby="export-title">
+              <h3 class="label marker" id="export-title">04 · Export</h3>
+              <ul class="export-list">
+                <li>
+                  <button class="export-row" type="button" data-export="guide" disabled>
+                    <span class="export-name">Overlay guide PNG</span>
+                    <span class="export-meta">Transparent 1080×1920 for Premiere Pro, CapCut, After Effects</span>
+                    <span class="export-arrow" aria-hidden="true">↓</span>
+                  </button>
+                </li>
+                <li>
+                  <button class="export-row" type="button" data-export="preview" disabled>
+                    <span class="export-name">Preview PNG</span>
+                    <span class="export-meta">Current frame with the overlay, for clients</span>
+                    <span class="export-arrow" aria-hidden="true">↓</span>
+                  </button>
+                </li>
+                <li>
+                  <button class="export-row" type="button" data-export="phone" disabled>
+                    <span class="export-name">Phone preview</span>
+                    <span class="export-meta">Fullscreen at real size on your phone</span>
+                    <span class="export-arrow" aria-hidden="true">↗</span>
+                  </button>
+                </li>
+              </ul>
+            </section>
+
+            <p class="zones-note">Zones are estimates. Apps change their UI often.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer page" id="footer">
+    <p class="footer-credit">Built by <a href="https://generosomm.dev">Merwin Generoso</a> · ERO | VISUALS</p>
+    <ul class="footer-links">
+      <li><a href="https://generosomm.dev">Portfolio</a></li>
+      <li><a href="https://github.com/generosomm">GitHub</a></li>
+      <li><a href="https://www.tiktok.com/@eroedtx">TikTok @eroedtx</a></li>
+    </ul>
+    <!-- Phase 3 overwrites the date from data/platforms.json. -->
+    <p class="footer-note">Zones are estimates, last checked <time datetime="2026-10-04" data-last-checked>Oct 4, 2026</time>.</p>
+  </footer>
+</body>
+</html>

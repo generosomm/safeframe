@@ -1,0 +1,10 @@
+Fonts served from this site (same files as generosomm.dev).
+
+Clash Display (600) and Satoshi (400, 500)
+  Indian Type Foundry, via Fontshare: https://www.fontshare.com
+  ITF Free Font License (free for personal and commercial use,
+  including web embedding).
+
+JetBrains Mono (variable, 400-500, Latin subset)
+  JetBrains, via Google Fonts: https://www.jetbrains.com/lp/mono/
+  SIL Open Font License 1.1.

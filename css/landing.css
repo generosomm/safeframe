@@ -1,0 +1,339 @@
+/* =============================================================
+   LANDING — hero (headline, CTA, drop zone, phone), how it works,
+   footer. The drop zone is reachable on the first screen at every
+   width so a file can be dropped within two seconds.
+   ============================================================= */
+
+/* ---- Hero ---------------------------------------------------- */
+
+.hero {
+  display: grid;
+  gap: var(--s-6);
+  padding-top: calc(var(--chrome-h) + var(--safe-top) + var(--s-5));
+  padding-bottom: var(--section-y);
+}
+
+.hero-copy {
+  display: grid;
+  justify-items: start;
+  gap: var(--s-5);
+}
+
+.hero-title {
+  max-width: 11ch;
+  font-size: var(--fs-headline);
+  line-height: var(--leading-tight);
+}
+
+.hero-lead {
+  max-width: 34ch;
+}
+
+/* ---- Drop zone ----------------------------------------------- */
+
+.dropzone {
+  display: grid;
+  gap: var(--s-3);
+}
+
+/* The real <input type="file"> stays focusable (sr-only); its label
+   is the big visible target, so click, tap and keyboard all open the
+   native picker with zero JS. */
+.dropzone-target {
+  --mark-color: var(--line-strong);
+  display: grid;
+  min-height: clamp(9rem, 7rem + 6vw, 12rem);
+  place-content: center;
+  justify-items: center;
+  gap: var(--s-2);
+  padding: var(--s-5);
+  background-color: var(--ink-850);
+  text-align: center;
+  cursor: pointer;
+  transition: background-color var(--dur-1) var(--ease-out);
+}
+
+.dropzone-target:hover,
+.dropzone.is-over .dropzone-target {
+  --mark-color: var(--accent);
+  background-color: var(--accent-wash);
+}
+
+.dropzone-input:focus-visible + .dropzone-target {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.dropzone-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-bottom: var(--s-1);
+  color: var(--accent);
+}
+
+.dropzone-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  letter-spacing: var(--track-display);
+  line-height: var(--leading-snug);
+}
+
+.dropzone-hint {
+  color: var(--text-mid);
+  font-size: var(--fs-small);
+}
+
+.dropzone-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2) var(--s-4);
+}
+
+.privacy-note {
+  color: var(--text-mid);
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+/* ---- Hero visual ---------------------------------------------
+   Fixed aspect ratio, so the 3D canvas (Phase 7) or its poster can
+   drop in later with zero layout shift. */
+
+.hero-visual {
+  display: grid;
+  place-items: center;
+}
+
+.scene-slot {
+  position: relative;
+  display: grid;
+  width: min(100%, 30rem);
+  aspect-ratio: 4 / 5;
+  place-items: center;
+}
+
+/* Decorative CSS stand-in for the 3D phone until the Phase 7 poster
+   exists. Proportions loosely follow TikTok's Standard zones; it is
+   art, not data. */
+.phone-poster {
+  position: relative;
+  width: 44%;
+  aspect-ratio: 9 / 19;
+  padding: 3.2%;
+  border-radius: 14% / 6.6%;
+  background: linear-gradient(160deg, #242423, var(--scene-graphite) 55%, #161615);
+  /* Green only as a thin rim light along one edge. */
+  box-shadow:
+    inset 1.5px 0 0 rgba(43, 212, 125, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 3rem 5rem -1.5rem rgba(0, 0, 0, 0.9);
+}
+
+/* Soft studio floor shadow. */
+.phone-poster::after {
+  position: absolute;
+  bottom: -9%;
+  left: 10%;
+  width: 80%;
+  height: 4%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.7), transparent);
+  content: "";
+}
+
+.phone-screen {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 11% / 5.2%;
+  outline: 1px solid rgba(232, 230, 224, 0.5);
+  background: linear-gradient(170deg, #1f1f1e, #121212 60%, #191918);
+}
+
+.pz {
+  position: absolute;
+  background: var(--zone-fill);
+}
+
+.pz-top {
+  inset: 0 0 auto;
+  height: 5.6%;
+}
+
+.pz-caption {
+  inset: auto 0 0;
+  height: 16.7%;
+}
+
+.pz-actions {
+  top: 5.6%;
+  right: 0;
+  bottom: 16.7%;
+  width: 11.1%;
+}
+
+.pz-safe {
+  position: absolute;
+  top: 5.6%;
+  right: 11.1%;
+  bottom: 16.7%;
+  left: 5.6%;
+  border: 1px dashed var(--accent);
+}
+
+/* ---- How it works -------------------------------------------- */
+
+.how {
+  display: grid;
+  gap: var(--head-gap);
+  padding-block: var(--section-y);
+  border-top: 1px solid var(--line);
+}
+
+.how-head {
+  display: grid;
+  justify-items: start;
+  gap: var(--s-4);
+}
+
+.how-title {
+  font-size: var(--fs-section);
+}
+
+.steps {
+  display: grid;
+  gap: var(--s-7);
+}
+
+/* Each step is a clip on one track: a shared hairline with an
+   accent in-point notch where every clip starts. */
+.step {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: var(--s-3);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--line-strong);
+}
+
+.step::before {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 2px;
+  height: 0.75rem;
+  background: var(--accent);
+  content: "";
+}
+
+.step-title {
+  font-size: var(--fs-h3);
+}
+
+.step p {
+  max-width: 36ch;
+  color: var(--text-mid);
+}
+
+/* ---- Footer -------------------------------------------------- */
+
+.footer {
+  display: grid;
+  gap: var(--s-5);
+  padding-block: var(--s-7) calc(var(--s-7) + var(--safe-bottom));
+  border-top: 1px solid var(--line);
+}
+
+.footer-credit {
+  font-size: var(--fs-small);
+}
+
+.footer-credit a {
+  border-bottom: 1px solid var(--line-strong);
+  transition: border-color var(--dur-1) var(--ease-out), color var(--dur-1) var(--ease-out);
+}
+
+.footer-credit a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--s-5);
+}
+
+.footer-links a {
+  display: inline-flex;
+  min-height: var(--tap);
+  align-items: center;
+  color: var(--text-mid);
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-weight: 500;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  transition: color var(--dur-1) var(--ease-out);
+}
+
+.footer-links a:hover,
+.footer-links a:focus-visible {
+  color: var(--accent);
+}
+
+.footer-note {
+  color: var(--text-mid);
+  font-size: var(--fs-small);
+}
+
+/* ---- Breakpoints --------------------------------------------- */
+
+@media (min-width: 768px) {
+  .steps {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .step {
+    padding-right: var(--s-6);
+  }
+
+  .footer {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+
+  .footer-note {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    min-height: 100svh;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto auto;
+    align-content: center;
+    column-gap: var(--s-6);
+    row-gap: var(--s-7);
+  }
+
+  .hero-copy {
+    grid-column: 1 / 9;
+    grid-row: 1;
+  }
+
+  .dropzone {
+    grid-column: 1 / 8;
+    grid-row: 2;
+  }
+
+  .hero-visual {
+    grid-column: 9 / 13;
+    grid-row: 1 / 3;
+  }
+}

@@ -1,0 +1,14 @@
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Local tooling and generated output
+node_modules/
+*.log
+
+# Vercel CLI link folder (holds your project and org IDs)
+.vercel/
+
+# Test media: keep your own clips out of the repo
+/test-media/
